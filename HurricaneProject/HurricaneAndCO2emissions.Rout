@@ -1,0 +1,292 @@
+
+R version 3.3.2 (2016-10-31) -- "Sincere Pumpkin Patch"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> ################################################################################################
+> ## read year-wise index data
+> df_co2_year = read.csv('data/CO2emissions_by_year.csv', header = TRUE, sep = "\t")
+> head(df_co2_year)
+  Year CO2_emissions_metric_tons_per_capita
+1 1960                             15.99978
+2 1961                             15.68126
+3 1962                             16.01394
+4 1963                             16.48276
+5 1964                             16.96812
+6 1965                             17.45173
+> 
+> ## read category 4 year-wise data
+> df_cat4_year_full = read.csv('data/category4_by_year.csv', header = TRUE, sep = "\t")
+> df_cat4_year = df_cat4_year_full[(df_cat4_year_full$Year > 1959 & df_cat4_year_full$Year < 2017),]
+> head(df_cat4_year)
+    Year Frequency
+108 1960         1
+109 1961         3
+110 1962         0
+111 1963         1
+112 1964         4
+113 1965         1
+> 
+> # category 4 year-wise analysis
+> par(mfrow=c(2,1))
+> plot(df_co2_year$Year, df_co2_year$CO2_emissions_metric_tons_per_capita, type="o", xlab="year", 
++ 	ylab="Avg emission over year (metric tons per capita)", main="Category 4 By Year")
+> plot(df_cat4_year$Year, df_cat4_year$Frequency, type="o", xlab="year", ylab="frequency", main="Category 4 By Year")
+> 
+> print('------------------ category 4 year-wise correlation test -----------------------------')
+[1] "------------------ category 4 year-wise correlation test -----------------------------"
+> cor.test(df_co2_year$CO2_emissions_metric_tons_per_capita, df_cat4_year$Frequency, method = "pearson")
+
+	Pearson's product-moment correlation
+
+data:  df_co2_year$CO2_emissions_metric_tons_per_capita and df_cat4_year$Frequency
+t = -1.3014, df = 55, p-value = 0.1985
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.4147323  0.0918618
+sample estimates:
+       cor 
+-0.1728431 
+
+> cor.test(df_co2_year$CO2_emissions_metric_tons_per_capita, df_cat4_year$Frequency, method = "kendall")
+
+	Kendall's rank correlation tau
+
+data:  df_co2_year$CO2_emissions_metric_tons_per_capita and df_cat4_year$Frequency
+z = -1.0136, p-value = 0.3108
+alternative hypothesis: true tau is not equal to 0
+sample estimates:
+       tau 
+-0.1035882 
+
+> cor.test(df_co2_year$CO2_emissions_metric_tons_per_capita, df_cat4_year$Frequency, method = "spearman")
+
+	Spearman's rank correlation rho
+
+data:  df_co2_year$CO2_emissions_metric_tons_per_capita and df_cat4_year$Frequency
+S = 35094, p-value = 0.3082
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.1373616 
+
+Warning message:
+In cor.test.default(df_co2_year$CO2_emissions_metric_tons_per_capita,  :
+  Cannot compute exact p-value with ties
+> 
+> ## read category 5 year-wise data
+> df_cat5_year_full = read.csv('data/category5_by_year.csv', header = TRUE, sep = "\t")
+> df_cat5_year = df_cat5_year_full[(df_cat4_year_full$Year > 1959 & df_cat4_year_full$Year < 2017),]
+> head(df_cat5_year)
+    Year Frequency
+108 1960         0
+109 1961         2
+110 1962         0
+111 1963         0
+112 1964         0
+113 1965         0
+> 
+> # category 5 year-wise analysis
+> par(mfrow=c(2,1))
+> plot(df_co2_year$Year, df_co2_year$CO2_emissions_metric_tons_per_capita, type="o", xlab="year", 
++ 	ylab="Avg emission over year (metric tons per capita)", main="Category 5 By Year")
+> plot(df_cat5_year$Year, df_cat5_year$Frequency, type="o", xlab="year", ylab="frequency", main="Category 5 By Year")
+> 
+> print('------------------ category 5 year-wise correlation test -----------------------------')
+[1] "------------------ category 5 year-wise correlation test -----------------------------"
+> cor.test(df_co2_year$CO2_emissions_metric_tons_per_capita, df_cat5_year$Frequency, method = "pearson")
+
+	Pearson's product-moment correlation
+
+data:  df_co2_year$CO2_emissions_metric_tons_per_capita and df_cat5_year$Frequency
+t = 0.62575, df = 55, p-value = 0.5341
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.1804436  0.3372563
+sample estimates:
+       cor 
+0.08407722 
+
+> cor.test(df_co2_year$CO2_emissions_metric_tons_per_capita, df_cat5_year$Frequency, method = "kendall")
+
+	Kendall's rank correlation tau
+
+data:  df_co2_year$CO2_emissions_metric_tons_per_capita and df_cat5_year$Frequency
+z = 1.4524, p-value = 0.1464
+alternative hypothesis: true tau is not equal to 0
+sample estimates:
+      tau 
+0.1564412 
+
+> cor.test(df_co2_year$CO2_emissions_metric_tons_per_capita, df_cat5_year$Frequency, method = "spearman")
+
+	Spearman's rank correlation rho
+
+data:  df_co2_year$CO2_emissions_metric_tons_per_capita and df_cat5_year$Frequency
+S = 24920, p-value = 0.1517
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.1923625 
+
+Warning message:
+In cor.test.default(df_co2_year$CO2_emissions_metric_tons_per_capita,  :
+  Cannot compute exact p-value with ties
+> 
+> 
+> #################################################################################################
+> ## read decade-wise index data
+> df_co2_decade = read.csv('data/CO2emissions_by_decade.csv', header = TRUE, sep = "\t")
+> head(df_co2_decade)
+  Decade CO2_emissions_metric_tons_per_capita.
+1   1960                                 17.43
+2   1970                                 21.47
+3   1980                                 19.37
+4   1990                                 19.40
+5   2000                                 19.22
+6   2010                                 16.40
+> 
+> ## read category4 decade-wise data
+> df_cat4_decade_full = read.csv('data/category4_by_decade.csv', header = TRUE, sep = "\t")
+> df_cat4_decade = df_cat4_decade_full[(df_cat4_decade_full$Decade > 1950 & df_cat4_decade_full$Decade < 2020),]
+> head(df_cat4_decade)
+   Decade Frequency
+12   1960        11
+13   1970         5
+14   1980         7
+15   1990        12
+16   2000        15
+17   2010        12
+> 
+> # category 4 decade-wise analysis
+> plot(df_co2_decade$Decade, df_co2_decade$CO2_emissions_metric_tons_per_capita, type="o", xlab="decade", 
++ 	ylab="Avg emission over decade (metric tons per capita)", main="Category 4 By Decade")
+> plot(df_cat4_decade$Decade, df_cat4_decade$Frequency, type="o", xlab="decade", ylab="frequency over decade", 
++ 	main="Category 4 By Decade")
+> 
+> print('------------------ category 4 decade-wise correlation test -----------------------------')
+[1] "------------------ category 4 decade-wise correlation test -----------------------------"
+> cor.test(df_co2_decade$CO2_emissions_metric_tons_per_capita, df_cat4_decade$Frequency, method = "pearson")
+
+	Pearson's product-moment correlation
+
+data:  df_co2_decade$CO2_emissions_metric_tons_per_capita and df_cat4_decade$Frequency
+t = -1.3466, df = 4, p-value = 0.2494
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.9427518  0.4628554
+sample estimates:
+       cor 
+-0.5584973 
+
+> cor.test(df_co2_decade$CO2_emissions_metric_tons_per_capita, df_cat4_decade$Frequency, method = "kendall")
+
+	Kendall's rank correlation tau
+
+data:  df_co2_decade$CO2_emissions_metric_tons_per_capita and df_cat4_decade$Frequency
+z = -1.1476, p-value = 0.2511
+alternative hypothesis: true tau is not equal to 0
+sample estimates:
+       tau 
+-0.4140393 
+
+Warning message:
+In cor.test.default(df_co2_decade$CO2_emissions_metric_tons_per_capita,  :
+  Cannot compute exact p-value with ties
+> cor.test(df_co2_decade$CO2_emissions_metric_tons_per_capita, df_cat4_decade$Frequency, method = "spearman")
+
+	Spearman's rank correlation rho
+
+data:  df_co2_decade$CO2_emissions_metric_tons_per_capita and df_cat4_decade$Frequency
+S = 52.248, p-value = 0.3206
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.4928054 
+
+Warning message:
+In cor.test.default(df_co2_decade$CO2_emissions_metric_tons_per_capita,  :
+  Cannot compute exact p-value with ties
+> 
+> ## read category 5 decade-wise data
+> df_cat5_decade_full = read.csv('data/category5_by_decade.csv', header = TRUE, sep = "\t")
+> df_cat5_decade = df_cat5_decade_full[(df_cat4_decade_full$Decade > 1950 & df_cat4_decade_full$Decade < 2020),]
+> head(df_cat5_decade)
+   Decade Frequency
+12   1960         4
+13   1970         3
+14   1980         3
+15   1990         2
+16   2000         8
+17   2010         6
+> 
+> # category 5 decade-wise analysis
+> par(mfrow=c(2,1))
+> plot(df_co2_decade$Decade, df_co2_decade$CO2_emissions_metric_tons_per_capita, type="o", xlab="decade", 
++ 	ylab="Avg emission over decade (metric tons per capita)", main="Category 5 By decade")
+> plot(df_cat5_decade$Decade, df_cat5_decade$Frequency, type="o", xlab="decade", 
++ 	ylab="frequency over decade", main="Category 5 By decade")
+> 
+> print('------------------ category 5 decade-wise correlation test -----------------------------')
+[1] "------------------ category 5 decade-wise correlation test -----------------------------"
+> cor.test(df_co2_decade$CO2_emissions_metric_tons_per_capita, df_cat5_decade$Frequency, method = "pearson")
+
+	Pearson's product-moment correlation
+
+data:  df_co2_decade$CO2_emissions_metric_tons_per_capita and df_cat5_decade$Frequency
+t = -0.84366, df = 4, p-value = 0.4464
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.9124245  0.6177500
+sample estimates:
+       cor 
+-0.3886657 
+
+> cor.test(df_co2_decade$CO2_emissions_metric_tons_per_capita, df_cat5_decade$Frequency, method = "kendall")
+
+	Kendall's rank correlation tau
+
+data:  df_co2_decade$CO2_emissions_metric_tons_per_capita and df_cat5_decade$Frequency
+z = -1.5302, p-value = 0.126
+alternative hypothesis: true tau is not equal to 0
+sample estimates:
+       tau 
+-0.5520524 
+
+Warning message:
+In cor.test.default(df_co2_decade$CO2_emissions_metric_tons_per_capita,  :
+  Cannot compute exact p-value with ties
+> cor.test(df_co2_decade$CO2_emissions_metric_tons_per_capita, df_cat5_decade$Frequency, method = "spearman")
+
+	Spearman's rank correlation rho
+
+data:  df_co2_decade$CO2_emissions_metric_tons_per_capita and df_cat5_decade$Frequency
+S = 60.365, p-value = 0.1032
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.7247138 
+
+Warning message:
+In cor.test.default(df_co2_decade$CO2_emissions_metric_tons_per_capita,  :
+  Cannot compute exact p-value with ties
+> 
+> proc.time()
+   user  system elapsed 
+  0.188   0.012   0.195 

@@ -1,0 +1,300 @@
+
+R version 3.3.2 (2016-10-31) -- "Sincere Pumpkin Patch"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> ################################################################################################
+> ## read year-wise index data
+> df_amo_year = read.csv('data/amo_by_year.csv', header = TRUE, sep = "\t")
+> df_amo_year$avg = rowMeans(df_amo_year[,c(-1)])
+> head(df_amo_year)
+  Year     X1     X2     X3     X4     X5     X6     X7     X8     X9    X10
+1 1948 -0.017 -0.029  0.026 -0.072 -0.006  0.053 -0.041 -0.024 -0.054  0.006
+2 1949  0.152  0.159  0.037  0.097 -0.025  0.000  0.070  0.101  0.069  0.103
+3 1950  0.109 -0.035 -0.107 -0.132 -0.060 -0.044 -0.057  0.019  0.008 -0.092
+4 1951  0.101 -0.003  0.011  0.167  0.171  0.288  0.420  0.302  0.248  0.258
+5 1952  0.170  0.181  0.229  0.189  0.179  0.381  0.371  0.402  0.360  0.353
+6 1953  0.264  0.183  0.140  0.312  0.341  0.274  0.342  0.257  0.278  0.146
+    X11   X12         avg
+1 0.133 0.061  0.00300000
+2 0.106 0.116  0.08208333
+3 0.078 0.087 -0.01883333
+4 0.173 0.173  0.19241667
+5 0.249 0.339  0.28358333
+6 0.242 0.256  0.25291667
+> 
+> ## read category 4 year-wise data
+> df_cat4_year_full = read.csv('data/category4_by_year.csv', header = TRUE, sep = "\t")
+> df_cat4_year = df_cat4_year_full[df_cat4_year_full$Year > 1947,]
+> head(df_cat4_year)
+    Year Frequency
+96  1948         2
+97  1949         1
+98  1950         3
+99  1951         2
+100 1952         1
+101 1953         0
+> 
+> # category 4 year-wise analysis
+> par(mfrow=c(2,1))
+> plot(df_amo_year$Year, df_amo_year$avg, type="o", xlab="year", ylab="mean AMO over year", 
++ 	main="Category 4 By Year", ylim=c(-0.5,0.5))
+> plot(df_cat4_year$Year, df_cat4_year$Frequency, type="o", xlab="year", ylab="frequency", main="Category 4 By Year")
+> 
+> print('------------------ category 4 year-wise correlation test -----------------------------')
+[1] "------------------ category 4 year-wise correlation test -----------------------------"
+> cor.test(df_amo_year$avg, df_cat4_year$Frequency, method = "pearson")
+
+	Pearson's product-moment correlation
+
+data:  df_amo_year$avg and df_cat4_year$Frequency
+t = 0.21098, df = 71, p-value = 0.8335
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.2062241  0.2536375
+sample estimates:
+       cor 
+0.02503082 
+
+> cor.test(df_amo_year$avg, df_cat4_year$Frequency, method = "kendall")
+
+	Kendall's rank correlation tau
+
+data:  df_amo_year$avg and df_cat4_year$Frequency
+z = 2.7079, p-value = 0.006771
+alternative hypothesis: true tau is not equal to 0
+sample estimates:
+      tau 
+0.2424317 
+
+> cor.test(df_amo_year$avg, df_cat4_year$Frequency, method = "spearman")
+
+	Spearman's rank correlation rho
+
+data:  df_amo_year$avg and df_cat4_year$Frequency
+S = 44191, p-value = 0.006064
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.3182891 
+
+Warning message:
+In cor.test.default(df_amo_year$avg, df_cat4_year$Frequency, method = "spearman") :
+  Cannot compute exact p-value with ties
+> 
+> ## read category 5 year-wise data
+> df_cat5_year_full = read.csv('data/category5_by_year.csv', header = TRUE, sep = "\t")
+> df_cat5_year = df_cat5_year_full[df_cat5_year_full$Year > 1947,]
+> head(df_cat5_year)
+    Year Frequency
+96  1948         0
+97  1949         0
+98  1950         0
+99  1951         0
+100 1952         0
+101 1953         1
+> 
+> # category 5 year-wise analysis
+> par(mfrow=c(2,1))
+> plot(df_amo_year$Year, df_amo_year$avg, type="o", xlab="year", ylab="mean AMO over year", 
++ 	main="Category 5 By Year", ylim=c(-0.5,0.5))
+> plot(df_cat5_year$Year, df_cat5_year$Frequency, type="o", xlab="year", ylab="frequency", main="Category 5 By Year")
+> 
+> print('------------------ category 5 year-wise correlation test -----------------------------')
+[1] "------------------ category 5 year-wise correlation test -----------------------------"
+> cor.test(df_amo_year$avg, df_cat5_year$Frequency, method = "pearson")
+
+	Pearson's product-moment correlation
+
+data:  df_amo_year$avg and df_cat5_year$Frequency
+t = 0.65625, df = 71, p-value = 0.5138
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.1551925  0.3023138
+sample estimates:
+      cor 
+0.0776471 
+
+> cor.test(df_amo_year$avg, df_cat5_year$Frequency, method = "kendall")
+
+	Kendall's rank correlation tau
+
+data:  df_amo_year$avg and df_cat5_year$Frequency
+z = 2.0732, p-value = 0.03815
+alternative hypothesis: true tau is not equal to 0
+sample estimates:
+     tau 
+0.195678 
+
+> cor.test(df_amo_year$avg, df_cat5_year$Frequency, method = "spearman")
+
+	Spearman's rank correlation rho
+
+data:  df_amo_year$avg and df_cat5_year$Frequency
+S = 48547, p-value = 0.03213
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.2511009 
+
+Warning message:
+In cor.test.default(df_amo_year$avg, df_cat5_year$Frequency, method = "spearman") :
+  Cannot compute exact p-value with ties
+> 
+> 
+> #################################################################################################
+> ## read decade-wise index data
+> df_amo_decade = read.csv('data/amo_by_decade.csv', header = TRUE, sep = "\t")
+> head(df_amo_decade)
+  Decade    AvgIndex
+1   1940  0.04254167
+2   1950  0.11584167
+3   1960 -0.02442500
+4   1970 -0.27363333
+5   1980 -0.13560000
+6   1990 -0.03722500
+> 
+> ## read category4 decade-wise data
+> df_cat4_decade_full = read.csv('data/category4_by_decade.csv', header = TRUE, sep = "\t")
+> df_cat4_decade = df_cat4_decade_full[df_cat4_decade_full$Decade > 1930,]
+> head(df_cat4_decade)
+   Decade Frequency
+10   1940         9
+11   1950        14
+12   1960        11
+13   1970         5
+14   1980         7
+15   1990        12
+> 
+> # category 4 decade-wise analysis
+> plot(df_amo_decade$Decade, df_amo_decade$AvgIndex, type="o", xlab="decade", ylab="mean AMO over decade", 
++ 	main="Category 4 By Decade", ylim=c(-0.5,0.5))
+> plot(df_cat4_decade$Decade, df_cat4_decade$Frequency, type="o", xlab="decade", ylab="frequency over decade", 
++ 	main="Category 4 By Decade")
+> 
+> print('------------------ category 4 decade-wise correlation test -----------------------------')
+[1] "------------------ category 4 decade-wise correlation test -----------------------------"
+> cor.test(df_amo_decade$AvgIndex, df_cat4_decade$Frequency, method = "pearson")
+
+	Pearson's product-moment correlation
+
+data:  df_amo_decade$AvgIndex and df_cat4_decade$Frequency
+t = 2.7122, df = 7, p-value = 0.0301
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.0985462 0.9353054
+sample estimates:
+      cor 
+0.7158199 
+
+> cor.test(df_amo_decade$AvgIndex, df_cat4_decade$Frequency, method = "kendall")
+
+	Kendall's rank correlation tau
+
+data:  df_amo_decade$AvgIndex and df_cat4_decade$Frequency
+z = 2.6207, p-value = 0.008775
+alternative hypothesis: true tau is not equal to 0
+sample estimates:
+      tau 
+0.7042952 
+
+Warning message:
+In cor.test.default(df_amo_decade$AvgIndex, df_cat4_decade$Frequency,  :
+  Cannot compute exact p-value with ties
+> cor.test(df_amo_decade$AvgIndex, df_cat4_decade$Frequency, method = "spearman")
+
+	Spearman's rank correlation rho
+
+data:  df_amo_decade$AvgIndex and df_cat4_decade$Frequency
+S = 18.577, p-value = 0.004117
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.8451957 
+
+Warning message:
+In cor.test.default(df_amo_decade$AvgIndex, df_cat4_decade$Frequency,  :
+  Cannot compute exact p-value with ties
+> 
+> ## read category 5 decade-wise data
+> df_cat5_decade_full = read.csv('data/category5_by_decade.csv', header = TRUE, sep = "\t")
+> df_cat5_decade = df_cat5_decade_full[df_cat5_decade_full$Decade > 1930,]
+> head(df_cat5_decade)
+   Decade Frequency
+10   1940         0
+11   1950         2
+12   1960         4
+13   1970         3
+14   1980         3
+15   1990         2
+> 
+> # category 5 decade-wise analysis
+> par(mfrow=c(2,1))
+> plot(df_amo_decade$Decade, df_amo_decade$AvgIndex, type="o", xlab="decade", 
++ 	ylab="mean AMO over decade", main="Category 5 By decade", ylim=c(-1,1))
+> plot(df_cat5_decade$Decade, '^'(df_cat5_decade$Frequency, (1/2)), type="o", xlab="decade", 
++ 	ylab="sq. root of frequency over decade", main="Category 5 By decade")
+> 
+> print('------------------ category 5 decade-wise correlation test -----------------------------')
+[1] "------------------ category 5 decade-wise correlation test -----------------------------"
+> cor.test(df_amo_decade$AvgIndex, '^'(df_cat5_decade$Frequency, (1/2)), method = "pearson")
+
+	Pearson's product-moment correlation
+
+data:  df_amo_decade$AvgIndex and df_cat5_decade$Frequency^(1/2)
+t = 1.9051, df = 7, p-value = 0.09846
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.1303687  0.8994226
+sample estimates:
+      cor 
+0.5843461 
+
+> cor.test(df_amo_decade$AvgIndex, '^'(df_cat5_decade$Frequency, (1/2)), method = "kendall")
+
+	Kendall's rank correlation tau
+
+data:  df_amo_decade$AvgIndex and df_cat5_decade$Frequency^(1/2)
+z = 1.378, p-value = 0.1682
+alternative hypothesis: true tau is not equal to 0
+sample estimates:
+      tau 
+0.3771683 
+
+Warning message:
+In cor.test.default(df_amo_decade$AvgIndex, df_cat5_decade$Frequency^(1/2),  :
+  Cannot compute exact p-value with ties
+> cor.test(df_amo_decade$AvgIndex, '^'(df_cat5_decade$Frequency, (1/2)), method = "spearman")
+
+	Spearman's rank correlation rho
+
+data:  df_amo_decade$AvgIndex and df_cat5_decade$Frequency^(1/2)
+S = 58.223, p-value = 0.1561
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.5148092 
+
+Warning message:
+In cor.test.default(df_amo_decade$AvgIndex, df_cat5_decade$Frequency^(1/2),  :
+  Cannot compute exact p-value with ties
+> 
+> proc.time()
+   user  system elapsed 
+  0.196   0.004   0.194 

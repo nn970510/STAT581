@@ -1,0 +1,292 @@
+
+R version 3.3.2 (2016-10-31) -- "Sincere Pumpkin Patch"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> ################################################################################################
+> ## read year-wise index data
+> df_nti_year = read.csv('data/climdiv_NatTempIndex_by_year.csv', header = TRUE, sep = "\t")
+> head(df_nti_year)
+  Year Avg_Temp_Anomaly_degree_F
+1 1895                     -2.49
+2 1896                     -0.83
+3 1897                     -1.27
+4 1898                     -1.39
+5 1899                     -1.82
+6 1900                     -0.05
+> 
+> ## read category 4 year-wise data
+> df_cat4_year_full = read.csv('data/category4_by_year.csv', header = TRUE, sep = "\t")
+> df_cat4_year = df_cat4_year_full[(df_cat4_year_full$Year > 1894 & df_cat4_year_full$Year < 2020),]
+> head(df_cat4_year)
+   Year Frequency
+43 1895         0
+44 1896         0
+45 1897         0
+46 1898         1
+47 1899         1
+48 1900         1
+> 
+> # category 4 year-wise analysis
+> par(mfrow=c(2,1))
+> plot(df_nti_year$Year, df_nti_year$Avg_Temp_Anomaly_degree_F, type="o", xlab="year", 
++ 	ylab="Avg Temp Anomaly over year (deg F)", main="Category 4 By Year")
+> plot(df_cat4_year$Year, df_cat4_year$Frequency, type="o", xlab="year", ylab="frequency", main="Category 4 By Year")
+> 
+> print('------------------ category 4 year-wise correlation test -----------------------------')
+[1] "------------------ category 4 year-wise correlation test -----------------------------"
+> cor.test(df_nti_year$Avg_Temp_Anomaly_degree_F, df_cat4_year$Frequency, method = "pearson")
+
+	Pearson's product-moment correlation
+
+data:  df_nti_year$Avg_Temp_Anomaly_degree_F and df_cat4_year$Frequency
+t = 1.328, df = 123, p-value = 0.1866
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.05792204  0.28847923
+sample estimates:
+      cor 
+0.1188948 
+
+> cor.test(df_nti_year$Avg_Temp_Anomaly_degree_F, df_cat4_year$Frequency, method = "kendall")
+
+	Kendall's rank correlation tau
+
+data:  df_nti_year$Avg_Temp_Anomaly_degree_F and df_cat4_year$Frequency
+z = 1.2201, p-value = 0.2224
+alternative hypothesis: true tau is not equal to 0
+sample estimates:
+       tau 
+0.08415911 
+
+> cor.test(df_nti_year$Avg_Temp_Anomaly_degree_F, df_cat4_year$Frequency, method = "spearman")
+
+	Spearman's rank correlation rho
+
+data:  df_nti_year$Avg_Temp_Anomaly_degree_F and df_cat4_year$Frequency
+S = 289060, p-value = 0.2139
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+     rho 
+0.111953 
+
+Warning message:
+In cor.test.default(df_nti_year$Avg_Temp_Anomaly_degree_F, df_cat4_year$Frequency,  :
+  Cannot compute exact p-value with ties
+> 
+> ## read category 5 year-wise data
+> df_cat5_year_full = read.csv('data/category5_by_year.csv', header = TRUE, sep = "\t")
+> df_cat5_year = df_cat5_year_full[(df_cat4_year_full$Year > 1894 & df_cat4_year_full$Year < 2020),]
+> head(df_cat5_year)
+   Year Frequency
+43 1895         0
+44 1896         0
+45 1897         0
+46 1898         0
+47 1899         0
+48 1900         0
+> 
+> # category 5 year-wise analysis
+> par(mfrow=c(2,1))
+> plot(df_nti_year$Year, df_nti_year$Avg_Temp_Anomaly_degree_F, type="o", xlab="year", 
++ 	ylab="Avg Temp Anomaly over year (deg F)", main="Category 5 By Year")
+> plot(df_cat5_year$Year, df_cat5_year$Frequency, type="o", xlab="year", ylab="frequency", main="Category 5 By Year")
+> 
+> print('------------------ category 5 year-wise correlation test -----------------------------')
+[1] "------------------ category 5 year-wise correlation test -----------------------------"
+> cor.test(df_nti_year$Avg_Temp_Anomaly_degree_F, df_cat5_year$Frequency, method = "pearson")
+
+	Pearson's product-moment correlation
+
+data:  df_nti_year$Avg_Temp_Anomaly_degree_F and df_cat5_year$Frequency
+t = 2.8323, df = 123, p-value = 0.005401
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.07509769 0.40543241
+sample estimates:
+     cor 
+0.247442 
+
+> cor.test(df_nti_year$Avg_Temp_Anomaly_degree_F, df_cat5_year$Frequency, method = "kendall")
+
+	Kendall's rank correlation tau
+
+data:  df_nti_year$Avg_Temp_Anomaly_degree_F and df_cat5_year$Frequency
+z = 2.3708, p-value = 0.01775
+alternative hypothesis: true tau is not equal to 0
+sample estimates:
+      tau 
+0.1711607 
+
+> cor.test(df_nti_year$Avg_Temp_Anomaly_degree_F, df_cat5_year$Frequency, method = "spearman")
+
+	Spearman's rank correlation rho
+
+data:  df_nti_year$Avg_Temp_Anomaly_degree_F and df_cat5_year$Frequency
+S = 256500, p-value = 0.01764
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.2119703 
+
+Warning message:
+In cor.test.default(df_nti_year$Avg_Temp_Anomaly_degree_F, df_cat5_year$Frequency,  :
+  Cannot compute exact p-value with ties
+> 
+> 
+> #################################################################################################
+> ## read decade-wise index data
+> df_nti_decade = read.csv('data/climdiv_NatTempIndex_by_decade.csv', header = TRUE, sep = "\t")
+> head(df_nti_decade)
+  Decade Avg_Temp_Anomaly_degree_F
+1   1890                    -1.560
+2   1900                    -1.252
+3   1910                    -1.441
+4   1920                    -0.974
+5   1930                    -0.185
+6   1940                    -0.773
+> 
+> ## read category4 decade-wise data
+> df_cat4_decade_full = read.csv('data/category4_by_decade.csv', header = TRUE, sep = "\t")
+> df_cat4_decade = df_cat4_decade_full[(df_cat4_decade_full$Decade > 1880 & df_cat4_decade_full$Decade < 2020),]
+> head(df_cat4_decade)
+   Decade Frequency
+5    1890         4
+6    1900         2
+7    1910         6
+8    1920         6
+9    1930        10
+10   1940         9
+> 
+> # category 4 decade-wise analysis
+> plot(df_nti_decade$Decade, df_nti_decade$Avg_Temp_Anomaly_degree_F, type="o", xlab="decade", 
++ 	ylab="Avg Temp Anomaly over decade (deg F)", main="Category 4 By Decade")
+> plot(df_cat4_decade$Decade, df_cat4_decade$Frequency, type="o", xlab="decade", ylab="frequency over decade", 
++ 	main="Category 4 By Decade")
+> 
+> print('------------------ category 4 decade-wise correlation test -----------------------------')
+[1] "------------------ category 4 decade-wise correlation test -----------------------------"
+> cor.test(df_nti_decade$Avg_Temp_Anomaly_degree_F, df_cat4_decade$Frequency, method = "pearson")
+
+	Pearson's product-moment correlation
+
+data:  df_nti_decade$Avg_Temp_Anomaly_degree_F and df_cat4_decade$Frequency
+t = 3.6551, df = 11, p-value = 0.003787
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.3202608 0.9172684
+sample estimates:
+      cor 
+0.7405665 
+
+> cor.test(df_nti_decade$Avg_Temp_Anomaly_degree_F, df_cat4_decade$Frequency, method = "kendall")
+
+	Kendall's rank correlation tau
+
+data:  df_nti_decade$Avg_Temp_Anomaly_degree_F and df_cat4_decade$Frequency
+z = 3.0619, p-value = 0.0022
+alternative hypothesis: true tau is not equal to 0
+sample estimates:
+      tau 
+0.6494054 
+
+Warning message:
+In cor.test.default(df_nti_decade$Avg_Temp_Anomaly_degree_F, df_cat4_decade$Frequency,  :
+  Cannot compute exact p-value with ties
+> cor.test(df_nti_decade$Avg_Temp_Anomaly_degree_F, df_cat4_decade$Frequency, method = "spearman")
+
+	Spearman's rank correlation rho
+
+data:  df_nti_decade$Avg_Temp_Anomaly_degree_F and df_cat4_decade$Frequency
+S = 67.183, p-value = 0.0006802
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.8154301 
+
+Warning message:
+In cor.test.default(df_nti_decade$Avg_Temp_Anomaly_degree_F, df_cat4_decade$Frequency,  :
+  Cannot compute exact p-value with ties
+> 
+> ## read category 5 decade-wise data
+> df_cat5_decade_full = read.csv('data/category5_by_decade.csv', header = TRUE, sep = "\t")
+> df_cat5_decade = df_cat5_decade_full[(df_cat4_decade_full$Decade > 1880 & df_cat4_decade_full$Decade < 2020),]
+> head(df_cat5_decade)
+   Decade Frequency
+5    1890         0
+6    1900         0
+7    1910         0
+8    1920         2
+9    1930         6
+10   1940         0
+> 
+> # category 5 decade-wise analysis
+> par(mfrow=c(2,1))
+> plot(df_nti_decade$Decade, df_nti_decade$Avg_Temp_Anomaly_degree_F, type="o", xlab="decade", 
++ 	ylab="Avg Temp Anomaly over decade (deg F)", main="Category 5 By decade")
+> plot(df_cat5_decade$Decade, df_cat5_decade$Frequency, type="o", xlab="decade", 
++ 	ylab="frequency over decade", main="Category 5 By decade")
+> 
+> print('------------------ category 5 decade-wise correlation test -----------------------------')
+[1] "------------------ category 5 decade-wise correlation test -----------------------------"
+> cor.test(df_nti_decade$Avg_Temp_Anomaly_degree_F, df_cat5_decade$Frequency, method = "pearson")
+
+	Pearson's product-moment correlation
+
+data:  df_nti_decade$Avg_Temp_Anomaly_degree_F and df_cat5_decade$Frequency
+t = 4.0281, df = 11, p-value = 0.001988
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.3845947 0.9281726
+sample estimates:
+      cor 
+0.7719905 
+
+> cor.test(df_nti_decade$Avg_Temp_Anomaly_degree_F, df_cat5_decade$Frequency, method = "kendall")
+
+	Kendall's rank correlation tau
+
+data:  df_nti_decade$Avg_Temp_Anomaly_degree_F and df_cat5_decade$Frequency
+z = 2.5709, p-value = 0.01014
+alternative hypothesis: true tau is not equal to 0
+sample estimates:
+      tau 
+0.5671516 
+
+Warning message:
+In cor.test.default(df_nti_decade$Avg_Temp_Anomaly_degree_F, df_cat5_decade$Frequency,  :
+  Cannot compute exact p-value with ties
+> cor.test(df_nti_decade$Avg_Temp_Anomaly_degree_F, df_cat5_decade$Frequency, method = "spearman")
+
+	Spearman's rank correlation rho
+
+data:  df_nti_decade$Avg_Temp_Anomaly_degree_F and df_cat5_decade$Frequency
+S = 105.25, p-value = 0.006454
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.7108537 
+
+Warning message:
+In cor.test.default(df_nti_decade$Avg_Temp_Anomaly_degree_F, df_cat5_decade$Frequency,  :
+  Cannot compute exact p-value with ties
+> 
+> proc.time()
+   user  system elapsed 
+  0.192   0.012   0.199 
