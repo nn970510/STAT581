@@ -152,16 +152,16 @@ Type 'q()' to quit R.
 +   }
 + 
 +   else if (funcname=="Hypergeometric"){
-+   	n0 = 13 # as per the problem, number of samples taken out is known
++     n0 = 13 # as per the problem, number of samples taken out is known
 + 
 +     num<-100*((sqrv/meanv) - n0)
 +     denom<-((sqrv/meanv) -meanv) - (1 - (meanv/n0))
 + 
-+     Nhat<-num / denom 	# parameter N = population size
++     Nhat<-num / denom   # parameter N = population size
 + 
-+     Chat<- (Nhat * meanv) / n0 	# parameter C = subclass 1 of 2 subclasses
++     Chat<- (Nhat * meanv) / n0  # parameter C = subclass 1 of 2 subclasses
 +     
-+     cat("Chat",Chat,"Nhat",Nhat)
++     cat("Nhat",Nhat,"Chat",Chat)
 +   }
 + 
 +   else{
@@ -170,31 +170,39 @@ Type 'q()' to quit R.
 + }
 > 
 > momestimator(rbinom(1000,1,0.6),"Bernoulli")
-phat= 0.608> 
+phat= 0.588> 
 > momestimator(rbinom(1000,100,0.6),"Binomial")
-phat= 0.5822552 nhat= 103.1197> 
+phat= 0.6292649 nhat= 95.34458> 
 > momestimator(rgeom(1000,0.6),"Geometric")
-phat= 0.5970149> 
+phat= 0.602047> 
 > momestimator(rpois(1000,3),"Poisson")
-lambdahat= 3.065> 
+lambdahat= 2.956> 
 > momestimator(runif(1000,1,4),"Uniform")
-alpha= 1.07096 beta= 4.039121> 
+alpha= 0.9894461 beta= 4.01381> 
 > momestimator(rnorm(1000,1,4),"Normal")
-mu= 0.9594757 sigmasquare= 15.80697> 
+mu= 0.8176508 sigmasquare= 15.88823> 
 > momestimator(rexp(1000,1/6),"Exponential")
-beta= 5.757474> 
+beta= 5.739652> 
 > momestimator(rgamma(1000,3,1/15),"Gamma")
-alpha= 2.972264 beta= 15.65125> 
+alpha= 3.146715 beta= 13.96204> 
 > momestimator(rbeta(1000,3,15),"Beta")
-alpha= 2.761813 beta= 14.01247> 
+alpha= 3.020742 beta= 14.915> 
 > momestimator(rchisq(1000,3),"Chisq")
-phat= 3.03011> 
+phat= 2.927392> 
 > momestimator(rt(1000,3),"T")
-v= 3.234333> 
+v= 3.483521> 
 > momestimator(rmultinom(1000,100,c(0.3,0.3,0.4)),"Multinomial")
-phat= 0.3003455 0.3480691 0.3815276> 
-> momestimator(rhyper(1000, 25, 45, 13),"Hypergeometric") 	# 13 (fixed) is the known number of samples taken out
-Chat 35.85493 Nhat 99.85305> 
+phat= 0.2943551 0.3234993 0.4314383> 
+> # Note: this test will fail if package 'rmvnorm' is not installed
+> # generate covariance matrix
+> n <- 4  
+> A <- matrix(runif(n^2)*2-1, ncol=n) 
+> Sigma <- t(A) %*% A
+> # test
+> # momestimator(rmvnorm(1000, c(1,1,1,1), Sigma),"Multivariate Normal")
+> 
+> momestimator(rhyper(1000, 25, 45, 13),"Hypergeometric")   # 13 (fixed) is the known number of samples taken out
+Nhat 99.85618 Chat 36.63185> 
 > proc.time()
    user  system elapsed 
-  0.144   0.008   0.144 
+  0.132   0.020   0.145 

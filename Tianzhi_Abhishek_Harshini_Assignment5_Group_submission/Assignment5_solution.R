@@ -131,16 +131,16 @@ momestimator<-function(vec0,funcname){
   }
 
   else if (funcname=="Hypergeometric"){
-  	n0 = 13 # as per the problem, number of samples taken out is known
+    n0 = 13 # as per the problem, number of samples taken out is known
 
     num<-100*((sqrv/meanv) - n0)
     denom<-((sqrv/meanv) -meanv) - (1 - (meanv/n0))
 
-    Nhat<-num / denom 	# parameter N = population size
+    Nhat<-num / denom   # parameter N = population size
 
-    Chat<- (Nhat * meanv) / n0 	# parameter C = subclass 1 of 2 subclasses
+    Chat<- (Nhat * meanv) / n0  # parameter C = subclass 1 of 2 subclasses
     
-    cat("Chat",Chat,"Nhat",Nhat)
+    cat("Nhat",Nhat,"Chat",Chat)
   }
 
   else{
@@ -172,4 +172,12 @@ momestimator(rt(1000,3),"T")
 
 momestimator(rmultinom(1000,100,c(0.3,0.3,0.4)),"Multinomial")
 
-momestimator(rhyper(1000, 25, 45, 13),"Hypergeometric") 	# 13 (fixed) is the known number of samples taken out
+# Note: this test will fail if package 'rmvnorm' is not installed
+# generate covariance matrix
+n <- 4  
+A <- matrix(runif(n^2)*2-1, ncol=n) 
+Sigma <- t(A) %*% A
+# test
+# momestimator(rmvnorm(1000, c(1,1,1,1), Sigma),"Multivariate Normal")
+
+momestimator(rhyper(1000, 25, 45, 13),"Hypergeometric")   # 13 (fixed) is the known number of samples taken out
