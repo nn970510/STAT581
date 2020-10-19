@@ -163,7 +163,6 @@ momestimator(rt(1000,3),"T")
 
 momestimator(rmultinom(1000,100,c(0.3,0.3,0.4)),"Multinomial")
 
-# Note: this test will fail if package 'rmvnorm' is not installed
 # generate covariance matrix
 Sigma <- matrix(c(10,3,3,2),2,2)
 mvn=mvrnorm(n=1000, rep(0, 2), Sigma)

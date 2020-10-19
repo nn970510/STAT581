@@ -22,7 +22,6 @@ phat= 3.032116
 v= 3.188064
 > momestimator(rmultinom(1000,100,c(0.3,0.3,0.4)),"Multinomial")
 phat= 0.2888382 0.3179093 0.4656906
-> # Note: this test will fail if package 'rmvnorm' is not installed
 > # generate covariance matrix
 > Sigma <- matrix(c(10,3,3,2),2,2)
 > mvn=mvrnorm(n=1000, rep(0, 2), Sigma)
