@@ -19,6 +19,8 @@ Type 'q()' to quit R.
 
 [Previously saved workspace restored]
 
+> library(MASS)
+> 
 > momestimator<-function(vec0,funcname){
 +   n=length(vec0)
 +   meanv=mean(vec0)
@@ -170,39 +172,36 @@ Type 'q()' to quit R.
 + }
 > 
 > momestimator(rbinom(1000,1,0.6),"Bernoulli")
-phat= 0.588> 
+phat= 0.591> 
 > momestimator(rbinom(1000,100,0.6),"Binomial")
-phat= 0.6292649 nhat= 95.34458> 
+phat= 0.6245058 nhat= 96.05996> 
 > momestimator(rgeom(1000,0.6),"Geometric")
-phat= 0.602047> 
+phat= 0.6060606> 
 > momestimator(rpois(1000,3),"Poisson")
-lambdahat= 2.956> 
+lambdahat= 3.035> 
 > momestimator(runif(1000,1,4),"Uniform")
-alpha= 0.9894461 beta= 4.01381> 
+alpha= 1.013734 beta= 3.990206> 
 > momestimator(rnorm(1000,1,4),"Normal")
-mu= 0.8176508 sigmasquare= 15.88823> 
+mu= 0.9227036 sigmasquare= 16.4058> 
 > momestimator(rexp(1000,1/6),"Exponential")
-beta= 5.739652> 
+beta= 5.856002> 
 > momestimator(rgamma(1000,3,1/15),"Gamma")
-alpha= 3.146715 beta= 13.96204> 
+alpha= 3.180375 beta= 14.00203> 
 > momestimator(rbeta(1000,3,15),"Beta")
-alpha= 3.020742 beta= 14.915> 
+alpha= 3.055942 beta= 15.38149> 
 > momestimator(rchisq(1000,3),"Chisq")
-phat= 2.927392> 
+phat= 3.012691> 
 > momestimator(rt(1000,3),"T")
-v= 3.483521> 
+v= 3.32971> 
 > momestimator(rmultinom(1000,100,c(0.3,0.3,0.4)),"Multinomial")
-phat= 0.2943551 0.3234993 0.4314383> 
-> # Note: this test will fail if package 'rmvnorm' is not installed
+phat= 0.323597 0.2807542 0.3976846> 
 > # generate covariance matrix
-> n <- 4  
-> A <- matrix(runif(n^2)*2-1, ncol=n) 
-> Sigma <- t(A) %*% A
-> # test
-> # momestimator(rmvnorm(1000, c(1,1,1,1), Sigma),"Multivariate Normal")
+> Sigma <- matrix(c(10,3,3,2),2,2)
+> mvn=mvrnorm(n=1000, rep(0, 2), Sigma)
+> # momestimator(mvn,"Multivariate Normal")
 > 
 > momestimator(rhyper(1000, 25, 45, 13),"Hypergeometric")   # 13 (fixed) is the known number of samples taken out
-Nhat 99.85618 Chat 36.63185> 
+Nhat 99.85238 Chat 35.90845> 
 > proc.time()
    user  system elapsed 
-  0.132   0.020   0.145 
+  0.156   0.008   0.157 

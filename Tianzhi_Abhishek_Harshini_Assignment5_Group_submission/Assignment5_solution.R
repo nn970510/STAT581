@@ -1,3 +1,4 @@
+library(MASS)
 momestimator<-function(vec0,funcname){
   n=length(vec0)
   meanv=mean(vec0)
@@ -113,21 +114,11 @@ momestimator<-function(vec0,funcname){
   } 
   
   else if (funcname=="Multivariate Normal"){
-    muhat<-NULL
-    meanv<-NULL
-    sigmahat<-NULL
-    for (i in 1:nrow(vec0)){
-      meanv<-c(meanv,mean(vec0[i,]))
-      muhat<-c(phat,meanv[i])
-    }
-    for (i in 1:length(snv)){
-      eachva<-NULL
-      for (j in 1:length(snv)){
-        eachva<-c(eachva,cov(vec0[i,],vec0[j,]))
-      }
-      sigmahat<-c(sigmahat,eachva)
-    }
-    cat("muhat",muhat,"sigmahat",sigmahat)
+    mu=apply(vec0,2,mean)
+    print(mu)
+    sumi=t(vec0-mu)%*%(vec0-mu)
+    sumi=sumi/1000
+    cat("muhat",mu,"sigmahat",sumi)
   }
 
   else if (funcname=="Hypergeometric"){
@@ -172,12 +163,9 @@ momestimator(rt(1000,3),"T")
 
 momestimator(rmultinom(1000,100,c(0.3,0.3,0.4)),"Multinomial")
 
-# Note: this test will fail if package 'rmvnorm' is not installed
 # generate covariance matrix
-n <- 4  
-A <- matrix(runif(n^2)*2-1, ncol=n) 
-Sigma <- t(A) %*% A
-# test
-# momestimator(rmvnorm(1000, c(1,1,1,1), Sigma),"Multivariate Normal")
+Sigma <- matrix(c(10,3,3,2),2,2)
+mvn=mvrnorm(n=1000, rep(0, 2), Sigma)
+momestimator(mvn,"Multivariate Normal")
 
 momestimator(rhyper(1000, 25, 45, 13),"Hypergeometric")   # 13 (fixed) is the known number of samples taken out
