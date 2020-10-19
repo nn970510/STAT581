@@ -9,32 +9,32 @@ MLEestimator<-function(vec0,funcname){
   if (funcname=="Bernoulli"){
     funct<-function(x)(x^sumv)*((1-x)^(n-sumv))
     pval=optimize(funct,c(0,1),tol=0.0001,maximum = TRUE)
-    print(paste ("p:", pval$maximum))
+    cat("p:", pval$maximum)
   }
   if (funcname=="Geometric"){
     funct<-function(x)(n*log2(x))+(sumv*log2(1-x))
     pval=optimize(funct,c(0,1),tol=0.0001,maximum = TRUE)
-    paste ("p:", pval$maximum)
+    cat ("p:", pval$maximum)
   }
   if (funcname=="Normal"){
     mu=sumv/n
-    paste("mu:",mu)
+    cat("mu:",mu)
     samu=sum((vec0-mu)^2)
     funct<-function(x)-(n/2)*(log(2*pi*x^2)) + (-1/(2*x^2)) *samu
     pval=optimize(funct,c(0,1000),tol=0.001,maximum = TRUE)
-    paste ("sigma:", pval$maximum)
+    cat ("sigma:", pval$maximum)
   }
   if (funcname=="Chisq"){
     funct<-function(x)(x/2-1)*sum(log2(vec0))-(0.5*sumv)-(n*log2(gamma(x/2)))-((n*x/2)*log2(2))
     pval=optimize(funct,c(1,100),tol=0.001,maximum = TRUE)
-    paste ("k:", pval$maximum)
+    cat ("k:", pval$maximum)
   }
   if (funcname=="Multivariate Normal"){
     mu=apply(vec0,2,mean)
-    print(mu)
+    cat(mu)
     sumi=t(vec0-mu)%*%(vec0-mu)
     sumi=sumi/1000
-    print (sumi)
+    cat (sumi)
   }
   if (funcname=="Binomial"){
   	nval = (1.0/p_true)*mean(vec0)
