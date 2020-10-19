@@ -1,0 +1,33 @@
+>momestimator(rbinom(1000,1,0.6),"Bernoulli")
+phat= 0.596
+> momestimator(rbinom(1000,100,0.6),"Binomial")
+phat= 0.5909635 nhat= 101.7609
+> momestimator(rgeom(1000,0.6),"Geometric")
+phat= 0.59988
+> momestimator(rpois(1000,3),"Poisson")
+lambdahat= 3.01
+> momestimator(runif(1000,1,4),"Uniform")
+alpha= 0.9965217 beta= 3.952535
+> momestimator(rnorm(1000,1,4),"Normal")
+mu= 0.8809603 sigmasquare= 15.2175
+> momestimator(rexp(1000,1/6),"Exponential")
+beta= 5.960248
+> momestimator(rgamma(1000,3,1/15),"Gamma")
+alpha= 2.983995 beta= 15.23239
+> momestimator(rbeta(1000,3,15),"Beta")
+alpha= 3.000277 beta= 14.96241
+> momestimator(rchisq(1000,3),"Chisq")
+phat= 3.032116
+> momestimator(rt(1000,3),"T")
+v= 3.188064
+> momestimator(rmultinom(1000,100,c(0.3,0.3,0.4)),"Multinomial")
+phat= 0.2888382 0.3179093 0.4656906
+> # Note: this test will fail if package 'rmvnorm' is not installed
+> # generate covariance matrix
+> Sigma <- matrix(c(10,3,3,2),2,2)
+> mvn=mvrnorm(n=1000, rep(0, 2), Sigma)
+> momestimator(mvn,"Multivariate Normal")
+[1] 0.02658915 0.01168452
+muhat 0.02658915 0.01168452 sigmahat 10.16739 2.935609 2.935609 2.015937
+> momestimator(rhyper(1000, 25, 45, 13),"Hypergeometric")   # 13 (fixed) is the known number of samples taken out
+Nhat 99.85116 Chat 35.70831
