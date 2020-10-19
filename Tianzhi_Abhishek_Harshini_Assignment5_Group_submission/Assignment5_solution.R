@@ -168,7 +168,5 @@ momestimator(rmultinom(1000,100,c(0.3,0.3,0.4)),"Multinomial")
 Sigma <- matrix(c(10,3,3,2),2,2)
 mvn=mvrnorm(n=1000, rep(0, 2), Sigma)
 momestimator(mvn,"Multivariate Normal")
-# test
-# momestimator(rmvnorm(1000, c(1,1,1,1), Sigma),"Multivariate Normal")
 
 momestimator(rhyper(1000, 25, 45, 13),"Hypergeometric")   # 13 (fixed) is the known number of samples taken out
