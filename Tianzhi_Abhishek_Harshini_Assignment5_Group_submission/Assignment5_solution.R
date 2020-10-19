@@ -1,3 +1,5 @@
+library(MASS)
+
 momestimator<-function(vec0,funcname){
   n=length(vec0)
   meanv=mean(vec0)
@@ -172,12 +174,9 @@ momestimator(rt(1000,3),"T")
 
 momestimator(rmultinom(1000,100,c(0.3,0.3,0.4)),"Multinomial")
 
-# Note: this test will fail if package 'rmvnorm' is not installed
 # generate covariance matrix
-n <- 4  
-A <- matrix(runif(n^2)*2-1, ncol=n) 
-Sigma <- t(A) %*% A
-# test
-# momestimator(rmvnorm(1000, c(1,1,1,1), Sigma),"Multivariate Normal")
+Sigma <- matrix(c(10,3,3,2),2,2)
+mvn=mvrnorm(n=1000, rep(0, 2), Sigma)
+# momestimator(mvn,"Multivariate Normal")
 
 momestimator(rhyper(1000, 25, 45, 13),"Hypergeometric")   # 13 (fixed) is the known number of samples taken out
