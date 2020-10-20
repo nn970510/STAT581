@@ -10,7 +10,6 @@ suppressWarnings({
     sumv<<-sum(vec0)
     sqrv=sum(vec0^2)
     
-    #author: Dennis (Bernoulli, Geometric, Normal, Chisq, Multivariate Normal)
     if (funcname=="Bernoulli"){
       cat(sprintf("\n ---- Bernoulli ----\n"))
       funct<-function(x)(x^sumv)*((1-x)^(n-sumv))
@@ -47,7 +46,6 @@ suppressWarnings({
       print (sumi)
     }
     
-    #author: Abhishek (Binomial, Exponential, Beta, Multinomial)
     if (funcname=="Binomial"){
       cat(sprintf("\n ---- Binomial ----\n"))
       nval = (1.0/p_true)*mean(vec0)
@@ -83,7 +81,6 @@ suppressWarnings({
       print(out)
     }
     
-    #author: Harshini (Poisson, Gamma, Uniform, Point)
     if (funcname == "Poisson") {
       cat(sprintf("\n ---- Poisson ---- \nParameters: Lambda = 0.5 \n"))
       
@@ -192,12 +189,6 @@ suppressWarnings({
   MLEestimator(rnorm(1000,3,3),"Normal")
   MLEestimator(rchisq(1000,2),"Chisq")
   
-  MLEestimator(sample(c(0,1), replace=TRUE, size=1000),"PointMass")
-  MLEestimator(rpois(1000, 0.5) ,"Poisson")
-  MLEestimator(runif(1000, 0, 100)  ,"Uniform")
-  MLEestimator(rgamma(1000, shape = 5, scale = 20),"Gamma")
-  #MLEestimator(rhyper(1000, 5, 35, 3),"Hypergeometric")
-  
   Sigma <- matrix(c(10,3,3,2),2,2)
   mvn <- mvrnorm(n=1000, rep(0, 2), Sigma)
   MLEestimator(mvn,"Multivariate Normal")
@@ -216,5 +207,11 @@ suppressWarnings({
   n_true<-10000
   pvec_true<-c(0.4, 0.21, 0.095, 0.043, 0.067, 0.185)
   MLEestimator(rmultinom(1, n_true, pvec_true),"Multinomial")
+  
+  MLEestimator(sample(c(0,1), replace=TRUE, size=1000),"PointMass")
+  MLEestimator(rpois(1000, 0.5) ,"Poisson")
+  MLEestimator(runif(1000, 0, 100)  ,"Uniform")
+  MLEestimator(rgamma(1000, shape = 5, scale = 20),"Gamma")
+  #MLEestimator(rhyper(1000, 5, 35, 3),"Hypergeometric")
   
 })
