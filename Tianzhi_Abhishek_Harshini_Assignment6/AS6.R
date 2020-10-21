@@ -172,18 +172,10 @@ suppressWarnings({
       p_value <- sum(D_vec > D0)/nboot
       cat(sprintf("\nThe p-value is: %s \n", p_value))
     }
-    if (funcname == "PointMass") {
-      unique_ele <- unique(vec0)
-      cat(sprintf("\n ---- PointMass ---- \n"))
-      cat(sprintf("\nThe p-value is: %s \n", (unique_ele
-                                              [which.max(
-                                                tabulate(
-                                                  match(vec0, unique_ele)))])))
-    }
     if(funcname=="Hypergeometric"){
     	cat(sprintf("\n ---- Hypergeometric ---- \n"))
 	  	vec1<-floor((n_true*K_true)/vec0)
-		cat(sprintf("Estimated N: %s\n", mean(vec1)))
+		  cat(sprintf("\nThe p-value is: %s \n", mean(vec1)))
 	  }
   }
   
@@ -213,7 +205,7 @@ suppressWarnings({
   pvec_true<-c(0.4, 0.21, 0.095, 0.043, 0.067, 0.185)
   MLEestimator(rmultinom(1, n_true, pvec_true),"Multinomial")
   
-  MLEestimator(sample(c(0,1), replace=TRUE, size=1000),"PointMass")
+  #MLEestimator(sample(c(0,1), replace=TRUE, size=1000),"PointMass")
   MLEestimator(rpois(1000, 0.5) ,"Poisson")
   MLEestimator(runif(1000, 0, 100)  ,"Uniform")
   MLEestimator(rgamma(1000, shape = 5, scale = 20),"Gamma")
