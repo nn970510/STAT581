@@ -180,6 +180,11 @@ suppressWarnings({
                                                 tabulate(
                                                   match(vec0, unique_ele)))])))
     }
+    if(funcname=="Hypergeometric"){
+    	cat(sprintf("\n ---- Hypergeometric ---- \n"))
+	  	vec1<-floor((n_true*K_true)/vec0)
+		cat(sprintf("Estimated N: %s\n", mean(vec1)))
+	  }
   }
   
   library(MASS)
@@ -212,6 +217,9 @@ suppressWarnings({
   MLEestimator(rpois(1000, 0.5) ,"Poisson")
   MLEestimator(runif(1000, 0, 100)  ,"Uniform")
   MLEestimator(rgamma(1000, shape = 5, scale = 20),"Gamma")
-  #MLEestimator(rhyper(1000, 5, 35, 3),"Hypergeometric")
   
+  N_true<-2000
+  K_true<-440
+  n_true<-270
+  MLEestimator(rhyper(1000, K_true, N_true-K_true, n_true),"Hypergeometric")
 })
