@@ -1,0 +1,71 @@
+> lis<-MLEestimatorWithGoodnessOfFit(rbinom(1000,1,0.6),"Bernoulli")
+Warning message:
+In ks.test(vec0, "pbinom", 1, pval$maximum) :
+  ties should not be present for the Kolmogorov-Smirnov test
+> hat<-lis$hatks
+> para<-lis$para
+> Paraboot("Bernoulli",para,1000,1000,hat)
+distribution is: Bernoulli
+goodness is: 0.469There were 50 or more warnings (use warnings() to see the first 50)
+> lis<-MLEestimatorWithGoodnessOfFit(rgeom(1000,0.6),"Geometric")
+Warning message:
+In ks.test(vec0, "pgeom", pval$maximum) :
+  ties should not be present for the Kolmogorov-Smirnov test
+> hat<-lis$hatks
+> para<-lis$para
+> Paraboot("Geometric",para,1000,1000,hat)
+distribution is: Geometric
+goodness is: 0.507There were 50 or more warnings (use warnings() to see the first 50)
+> lis<-MLEestimatorWithGoodnessOfFit(rnorm(1000,3,9),"Normal")
+> hat<-lis$hatks
+> para<-lis$para
+> Paraboot("Normal",para,1000,1000,hat)
+distribution is: Normal
+goodness is: 0.994
+> MLEestimatorWithGoodnessOfFit(sample(rpois(10000, 0.5), 1000), "Poisson")
+
+ ---- Poisson ---- 
+Parameters: Lambda = 0.5 
+Parameter Estimates: 0.511 
+
+The p-value is: 0.908 
+NULL
+There were 50 or more warnings (use warnings() to see the first 50)
+> MLEestimatorWithGoodnessOfFit(sample(runif(10000, 0, 100), 1000), "Uniform")
+
+ ---- Uniform ---- 
+Parameters: a = 0 b = 100 
+Parameter Estimates: 0.0491039361804724 99.9649495817721
+
+The p-value is: 0.115 
+NULL
+> MLEestimatorWithGoodnessOfFit(sample(rgamma(10000, shape = 5, scale = 20), 1000), "Gamma")
+
+ ---- Gamma ---- 
+Parameters: alpha = 5 beta = 20 
+Parameter Estimates: 5.06395909598068 19.6532378330163
+
+The p-value is: 0.295 
+NULL
+> MLEestimatorWithGoodnessOfFit(sample(rbinom(10000, 1, 0.5), 1000), "Binomial")
+
+ ---- Binomial ---- 
+Parameters: n = 1000 p = 0.5 
+Parameter Estimates: 0.000485 
+NULL
+> MLEestimatorWithGoodnessOfFit(sample(rexp(10000, 2), 1000), "Exponential")
+
+ ---- Exponential ---- 
+Parameters: theta = 2 
+Parameter Estimates: 0.508934808825263 
+
+The p-value is: 0.484 
+NULL
+> MLEestimatorWithGoodnessOfFit(sample(rbeta(10000, shape1 = 5.5, shape2 = 2.5), 1000), "Beta")
+
+ ---- Beta ---- 
+Parameters: alpha = 5.5 beta = 2.5 
+Parameter Estimates: 5.51736794343618 2.50079544753364
+
+The p-value is: 0.828 
+NULL
