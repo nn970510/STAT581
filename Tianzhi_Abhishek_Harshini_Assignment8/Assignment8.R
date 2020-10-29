@@ -15,7 +15,7 @@ MLEestimatorWithGoodnessOfFit<-function(vec0,funcname){
   if (funcname=="Geometric"){
     funct<-function(x)(n*log2(x))+(sumv*log2(1-x))
     pval=optimize(funct,c(0,1),tol=0.0001,maximum = TRUE)
-    hat=ks.test(vec0,"pbinom",1,pval$maximum)$statistic
+    hat=ks.test(vec0,"pgeom",pval$maximum)$statistic
     res<-list(para=c(pval$maximum),hatks=hat)
   }
   if (funcname=="Normal"){
@@ -230,7 +230,6 @@ MLEestimatorWithGoodnessOfFit<-function(vec0,funcname){
 }
 Paraboot<-function(funcname,parameter,l,n,hatks){
   correctrate=0
-  cat("hat", hatks)
   for (i in 1:n){
     star=0
     hat=0
@@ -253,7 +252,9 @@ Paraboot<-function(funcname,parameter,l,n,hatks){
       correctrate=correctrate+1
     }
   }
-  cat (correctrate/n)
+  cat ("distribution is:", funcname)
+  cat("\n")
+  cat ("goodness is:", correctrate/n)
 }
 
 lis<-MLEestimatorWithGoodnessOfFit(rbinom(1000,1,0.6),"Bernoulli")
