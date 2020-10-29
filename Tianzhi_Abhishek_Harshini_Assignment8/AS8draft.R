@@ -1,4 +1,4 @@
-MLEestimator<-function(vec0,funcname){
+MLEestimatorWithGoodnessOfFit<-function(vec0,funcname){
   n<<-length(vec0)
   meanv<<-mean(vec0)
   snv=sum((vec0-meanv)^2)
@@ -194,7 +194,7 @@ MLEestimator<-function(vec0,funcname){
         G2_val <- -trigamma(alpha + beta)
         G3_val <- trigamma(beta) - trigamma(alpha + beta)
         G <- matrix(c(G1_val, G2_val, G2_val, G3_val), nrow = 2, ncol = 2, byrow = TRUE)
-        G_inverse <- inv(G)
+        G_inverse <- solve(G)
         
         # Final values
         estimates <- estimates - t(G_inverse %*% g)
@@ -204,7 +204,7 @@ MLEestimator<-function(vec0,funcname){
       return(c(alpha, beta))
     }
     
-    
+    }
     nboot <- 1000
     theta_hat <- theta_hat_func(vec0)
     cat(sprintf("Parameter Estimates: %s %s\n", theta_hat[1], theta_hat[2]))
@@ -222,11 +222,11 @@ MLEestimator<-function(vec0,funcname){
       D_star <- ks.test(x_star, q_hat_star)$statistic
       D_vec <- c(D_vec, D_star)
     }
+    
     p_value <- sum(D_vec > D0)/nboot
     cat(sprintf("\nThe p-value is: %s \n", p_value))
   }
   return (res)
-}
 }
 Paraboot<-function(funcname,parameter,l,n,hatks){
   correctrate=0
@@ -236,17 +236,17 @@ Paraboot<-function(funcname,parameter,l,n,hatks){
     hat=0
     if (funcname=="Bernoulli"){
       data=rbinom(l,1,parameter[1])
-      parahatstar=MLEestimator(data,"Bernoulli")$para
+      parahatstar=MLEestimatorWithGoodnessOfFit(data,"Bernoulli")$para
       star=ks.test(data,"pbinom",1,parahatstar[1])$statistic
     }
     else if (funcname=="Geometric"){
       data=rgeom(l,parameter[1])
-      parahatstar=MLEestimator(data,"Geometric")$para
+      parahatstar=MLEestimatorWithGoodnessOfFit(data,"Geometric")$para
       star=ks.test(data,"pgeom",parahatstar[1])$statistic
     }
     else if (funcname=="Normal"){
       data=rnorm(l,parameter[1],parameter[2])
-      parahatstar=MLEestimator(data,"Normal")$para
+      parahatstar=MLEestimatorWithGoodnessOfFit(data,"Normal")$para
       star=ks.test(data,"pnorm",parahatstar[1],parahatstar[2])$statistic
     }
     if (star>hatks){
@@ -256,25 +256,25 @@ Paraboot<-function(funcname,parameter,l,n,hatks){
   cat (correctrate/n)
 }
 
-# lis<-MLEestimator(rbinom(1000,1,0.6),"Bernoulli")
-# hat<-lis$hatks
-# para<-lis$para
-# Paraboot("Bernoulli",para,1000,1000,hat)
-# 
-# lis<-MLEestimator(rgeom(1000,0.6),"Geometric")
-# hat<-lis$hatks
-# para<-lis$para
-# Paraboot("Geometric",para,1000,1000,hat)
-# 
-# lis<-MLEestimator(rnorm(1000,3,9),"Normal")
-# hat<-lis$hatks
-# para<-lis$para
-# Paraboot("Normal",para,1000,1000,hat)
+lis<-MLEestimatorWithGoodnessOfFit(rbinom(1000,1,0.6),"Bernoulli")
+hat<-lis$hatks
+para<-lis$para
+Paraboot("Bernoulli",para,1000,1000,hat)
+ 
+lis<-MLEestimatorWithGoodnessOfFit(rgeom(1000,0.6),"Geometric")
+hat<-lis$hatks
+para<-lis$para
+Paraboot("Geometric",para,1000,1000,hat)
 
-# MLEestimator(sample(rpois(10000, 0.5), 1000), "Poisson")
-# MLEestimator(sample(runif(10000, 0, 100), 1000), "Uniform")
-# MLEestimator(sample(rgamma(10000, shape = 5, scale = 20), 1000), "Gamma")
-# MLEestimator(sample(rbinom(10000, 1, 0.5), 1000), "Binomial")
-# MLEestimator(sample(rexp(10000, 2), 1000), "Exponential")
-# MLEestimator(sample(rbeta(10000, shape1 = 5.5, shape2 = 2.5), 1000), "Beta")
+lis<-MLEestimatorWithGoodnessOfFit(rnorm(1000,3,9),"Normal")
+hat<-lis$hatks
+para<-lis$para
+Paraboot("Normal",para,1000,1000,hat)
+
+MLEestimatorWithGoodnessOfFit(sample(rpois(10000, 0.5), 1000), "Poisson")
+MLEestimatorWithGoodnessOfFit(sample(runif(10000, 0, 100), 1000), "Uniform")
+MLEestimatorWithGoodnessOfFit(sample(rgamma(10000, shape = 5, scale = 20), 1000), "Gamma")
+MLEestimatorWithGoodnessOfFit(sample(rbinom(10000, 1, 0.5), 1000), "Binomial")
+MLEestimatorWithGoodnessOfFit(sample(rexp(10000, 2), 1000), "Exponential")
+MLEestimatorWithGoodnessOfFit(sample(rbeta(10000, shape1 = 5.5, shape2 = 2.5), 1000), "Beta")
 
