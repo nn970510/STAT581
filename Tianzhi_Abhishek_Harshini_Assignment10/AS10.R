@@ -28,6 +28,11 @@ sim <- function(p){
 	beta<-0.01
 	stop<-0
 
+	h0<-'p<=0.45'
+	h1<-'p>=0.55'
+
+	theta0<-p
+
 	while(stop == 0)
 	{
 		outcome_seq = append(outcome_seq, rbinom(1,1,p))
@@ -37,9 +42,11 @@ sim <- function(p){
 		stop<-out[3]
 	}
 
-	ifelse((out[3] == -1), paste("accept: p <=", theta0, "reject: p >=", theta1), 
-		paste("accept: p >=", theta1, "reject: p <=", theta0))
+	ifelse((out[3] == 1), print(paste("accept: ", h0, "reject: ", h1)), 
+		print(paste("accept: ", h1, "reject: ", h0)))
+	print('-----------------------------------------------------------')
 }
 
-# sim(0.3)
+sim(0.3)
 sim(0.56)
+sim(0.54)

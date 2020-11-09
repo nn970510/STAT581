@@ -49,6 +49,11 @@ Type 'q()' to quit R.
 + 	beta<-0.01
 + 	stop<-0
 + 
++ 	h0<-'p<=0.45'
++ 	h1<-'p>=0.55'
++ 
++ 	theta0<-p
++ 
 + 	while(stop == 0)
 + 	{
 + 		outcome_seq = append(outcome_seq, rbinom(1,1,p))
@@ -58,15 +63,15 @@ Type 'q()' to quit R.
 + 		stop<-out[3]
 + 	}
 + 
-+ 	ifelse((out[3] == -1), paste("accept: p <=", theta0, "reject: p >=", theta1), 
-+ 		paste("accept: p >=", theta1, "reject: p <=", theta0))
++ 	ifelse((out[3] == 1), print(paste("accept: ", h0, "reject: ", h1)), 
++ 		print(paste("accept: ", h1, "reject: ", h0)))
++ 	print('-----------------------------------------------------------')
 + }
 > 
-> # sim(0.3)
-> sim(0.56)
+> sim(0.3)
 [1] "lower bound a -4.59511985013459"
 [1] "upper bound b 4.59511985013459"
-[1] "cumulative sum of the Log Likelihood Funtions 0.200670695462151"
+[1] "cumulative sum of the Log Likelihood Funtions 0.606135803570316"
 [1] "<=a FALSE"
 [1] ">=b FALSE"
 [1] ">a <b TRUE"
@@ -75,7 +80,7 @@ Type 'q()' to quit R.
 
 [1] "lower bound a -4.59511985013459"
 [1] "upper bound b 4.59511985013459"
-[1] "cumulative sum of the Log Likelihood Funtions 0.401341390924302"
+[1] "cumulative sum of the Log Likelihood Funtions 1.21227160714063"
 [1] "<=a FALSE"
 [1] ">=b FALSE"
 [1] ">a <b TRUE"
@@ -84,7 +89,7 @@ Type 'q()' to quit R.
 
 [1] "lower bound a -4.59511985013459"
 [1] "upper bound b 4.59511985013459"
-[1] "cumulative sum of the Log Likelihood Funtions 1.00335347731076"
+[1] "cumulative sum of the Log Likelihood Funtions 1.81840741071095"
 [1] "<=a FALSE"
 [1] ">=b FALSE"
 [1] ">a <b TRUE"
@@ -93,7 +98,7 @@ Type 'q()' to quit R.
 
 [1] "lower bound a -4.59511985013459"
 [1] "upper bound b 4.59511985013459"
-[1] "cumulative sum of the Log Likelihood Funtions 2.00670695462151"
+[1] "cumulative sum of the Log Likelihood Funtions 2.42454321428126"
 [1] "<=a FALSE"
 [1] ">=b FALSE"
 [1] ">a <b TRUE"
@@ -102,7 +107,7 @@ Type 'q()' to quit R.
 
 [1] "lower bound a -4.59511985013459"
 [1] "upper bound b 4.59511985013459"
-[1] "cumulative sum of the Log Likelihood Funtions 3.01006043193227"
+[1] "cumulative sum of the Log Likelihood Funtions 3.03067901785158"
 [1] "<=a FALSE"
 [1] ">=b FALSE"
 [1] ">a <b TRUE"
@@ -111,24 +116,517 @@ Type 'q()' to quit R.
 
 [1] "lower bound a -4.59511985013459"
 [1] "upper bound b 4.59511985013459"
-[1] "cumulative sum of the Log Likelihood Funtions 4.01341390924303"
-[1] "<=a FALSE"
-[1] ">=b FALSE"
-[1] ">a <b TRUE"
-[[1]]
-[1] 0
-
-[1] "lower bound a -4.59511985013459"
-[1] "upper bound b 4.59511985013459"
-[1] "cumulative sum of the Log Likelihood Funtions 5.41810877747808"
+[1] "cumulative sum of the Log Likelihood Funtions 4.68478337727125"
 [1] "<=a FALSE"
 [1] ">=b TRUE"
 [1] ">a <b FALSE"
 [[1]]
 [1] 1
 
-[1] "accept: p >= 0.55 reject: p <= 0.45"
+[1] "accept:  p<=0.45 reject:  p>=0.55"
+[1] "-----------------------------------------------------------"
+> sim(0.56)
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -0.0180185055026784"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -0.0765283723600938"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -0.135038239217509"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -0.193548106074925"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -0.25205797293234"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -0.310567839789755"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -0.369077706647171"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -0.427587573504586"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -0.526588801716739"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -0.625590029928891"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -0.765082619495781"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -0.90457520906267"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -1.04406779862956"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -1.18356038819645"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -1.32305297776334"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -1.46254556733023"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -1.60203815689712"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -1.78202210781874"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -1.96200605874037"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -2.141990009662"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -2.36246532193836"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -2.58294063421472"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -2.80341594649109"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -3.02389125876745"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -3.24436657104381"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -3.46484188332018"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -3.72580855695128"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -4.02726659193711"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -4.32872462692295"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -4.67067402326353"
+[1] "<=a TRUE"
+[1] ">=b FALSE"
+[1] ">a <b FALSE"
+[[1]]
+[1] -1
+
+[1] "accept:  p>=0.55 reject:  p<=0.45"
+[1] "-----------------------------------------------------------"
+> sim(0.54)
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -0.0219789067187752"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -0.0439578134375505"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -0.0659367201563257"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions -0.0475875814881291"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 0.0110896025670393"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 0.0697667866222077"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 0.168772016064348"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 0.267777245506488"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 0.366782474948628"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 0.465787704390768"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 0.605120979219881"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 0.784782299435964"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 0.964443619652048"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 1.14410493986813"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 1.36409430547119"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 1.62441171646122"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 1.88472912745124"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 2.18537458382824"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 2.52634808559221"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 2.90764963274316"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 3.2889511798941"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 3.67025272704504"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 4.09188231958296"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 4.51351191212087"
+[1] "<=a FALSE"
+[1] ">=b FALSE"
+[1] ">a <b TRUE"
+[[1]]
+[1] 0
+
+[1] "lower bound a -4.59511985013459"
+[1] "upper bound b 4.59511985013459"
+[1] "cumulative sum of the Log Likelihood Funtions 4.97546955004576"
+[1] "<=a FALSE"
+[1] ">=b TRUE"
+[1] ">a <b FALSE"
+[[1]]
+[1] 1
+
+[1] "accept:  p<=0.45 reject:  p>=0.55"
+[1] "-----------------------------------------------------------"
 > 
 > proc.time()
    user  system elapsed 
-  0.116   0.012   0.121 
+  0.120   0.020   0.132 
