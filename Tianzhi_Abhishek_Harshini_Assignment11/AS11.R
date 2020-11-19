@@ -1,10 +1,15 @@
+#' ---
+#' title: "Assignment 11: Bayes Prior Distributions"
+#' author: "Tianzhi, Abhishek, Harshini"
+#' ---
+
 suppressWarnings({
 
     library(actuar)
     library(tidyverse)
 
     wholeest<-function(vec0,funcname,prior=c()){
-      n<<-length(vec0)
+      n <-length(vec0)
       meanv<<-mean(vec0)
       snv=sum((vec0-meanv)^2)
       sumv<<-sum(vec0)
@@ -22,7 +27,8 @@ suppressWarnings({
         p = seq(0,1, length=n)
         hat=ks.test(vec0,"pbinom",1,pval$maximum)$statistic
         print(paste("kstest result:",hat))
-        plot(p, dbeta(p, prior[1]+sumv, n-sumv+prior[2]), ylab="density", type ="l", main="For Bernoulli Distribution")
+        plot(p, dbeta(p, prior[1]+sumv, n-sumv+prior[2]), ylab="density",
+             type ="l", main="For Bernoulli Distribution")
       } 
       ########################################
       # Geometric Distribution
@@ -37,7 +43,8 @@ suppressWarnings({
         hat=ks.test(vec0,"pgeom",pval$maximum)$statistic
         print(paste("kstest result:",hat))
         p = seq(0,1, length=n)
-        plot(p, dbeta(p, prior[1]+n, sumv+prior[2]-1), ylab="density", type ="l", main="For Geometric Distribution")
+        plot(p, dbeta(p, prior[1]+n, sumv+prior[2]-1), ylab="density",
+             type ="l", main="For Geometric Distribution")
       }
       ########################################
       # Normal Distribution
@@ -59,7 +66,8 @@ suppressWarnings({
         # x = seq(-5,10, length=n)
         # odsesq=1/(pval$maximum)^2
         # w=odsesq/(odsesq+(1/prior[2]^2))
-        # plot(x, dnorm(x,w*sumv/n+(1-w)*prior[1],1/(odsesq+(1/prior[2]^2))), ylab="density", type ="l")
+        # plot(x, dnorm(x,w*sumv/n+(1-w)*prior[1],1/(odsesq+(1/prior[2]^2))),
+        # ylab="density", type ="l")
 
         # Consider a normal sample of 1000 data points
         # sample <- rnorm(n = 1000, mean = 14, sd = 20)
@@ -68,7 +76,6 @@ suppressWarnings({
         r <- 1
         tau <- 6
         mu <- 4
-        n <- length(sample)
         mean_sample <- mean(sample)
       
         # Let's assume alpha and beta for the prior distribution to be 1 and 3
@@ -82,7 +89,9 @@ suppressWarnings({
             c(conditional_distribution_mean, conditional_distribution_precision)))
       
         marginal_distribution_alpha <- prior_alpha + n/2
-        marginal_distribution_beta <- 1 / ((1/prior_beta) + 1/2*(sum((sample - mean_sample)**2))) + tau*n*((mean_sample - mu)**2)/2*(tau + n)
+        marginal_distribution_beta <- 1 / ((1/prior_beta) 
+                                           + 1/2*(sum((sample - mean_sample)**2))) 
+                                      + tau*n*((mean_sample - mu)**2)/2*(tau + n)
       
         print(paste("The marginal posterior gamma distribution parameters are (alpha, beta): ",
                   c(marginal_distribution_alpha, marginal_distribution_beta)))
@@ -96,10 +105,12 @@ suppressWarnings({
                                             marginal_distribution_beta)
       
         plot(density(conditional_joint_distribution),
-           main = "Conditional Joint Probability Distribution for Mean M for Normal Distribution")
+           main = "Conditional Joint Probability Distribution 
+           for Mean M for Normal Distribution")
       
         plot(density(marginal_joint_distribution), 
-           main = "Marginal Joint Probability Distribution for Precision R for Normal Distribution")
+           main = "Marginal Joint Probability Distribution 
+           for Precision R for Normal Distribution")
       }
       ########################################
       # Binomial Distribution
@@ -115,8 +126,8 @@ suppressWarnings({
         print(paste ("p (MLE):", pval))
         
         theta_hat_func <- function(data) {
-          n <- length(data)
-          estimated_p <- (1 / n) * (sum(data)/n)
+          n1 <- length(data)
+          estimated_p <- (1 / n1) * (sum(data)/n1)
           return(estimated_p)
         }
         
@@ -133,12 +144,13 @@ suppressWarnings({
         
         # Now compute the posterior distribution parameters
         posterior_alpha <- prior_alpha + sum(sample)
-        posterior_beta <- prior_beta + r * length(sample) - sum(sample)
+        posterior_beta <- prior_beta + r * n - sum(sample)
         
         print(paste("The posterior beta distribution parameters are: ",
                     c(posterior_alpha, posterior_beta)))
         
-        # Now using this posterior_alpha and posterior_beta plot the density of 10K data points
+        # Now using this posterior_alpha and posterior_beta plot the density 
+        # of 10K data points
         posterior_distribution_sample <- rbeta(n = 10000,
                                                shape1 = posterior_alpha, 
                                                shape2 = posterior_beta)
@@ -192,12 +204,13 @@ suppressWarnings({
         
         # Now compute the posterior distribution parameters
         posterior_w0 <- max(c(prior_w0, sample))
-        posterior_alpha <- prior_alpha + length(sample)
+        posterior_alpha <- prior_alpha + n
         
         print(paste("The posterior pareto distribution parameters are: ",
                     c(posterior_w0, posterior_alpha)))
         
-        # Now using the posterior_w0 and posterior_alpha, plot the density of 10K data points
+        # Now using the posterior_w0 and posterior_alpha, plot the density 
+        # of 10K data points
         posterior_distribution_sample <- rpareto(n = 10000,
                                                  posterior_w0,
                                                  posterior_alpha)
@@ -242,12 +255,13 @@ suppressWarnings({
         
         # Now compute the posterior distribution parameters
         posterior_alpha <- prior_alpha + sum(sample)
-        posterior_beta <- 1/(1/prior_beta + length(sample))
+        posterior_beta <- 1/(1/prior_beta + n)
         
         print(paste("The posterior gamma distribution parameters are: ",
                     c(posterior_alpha, posterior_beta)))
         
-        # Now using the posterior_alpha and posterior_beta, plot the density of 10K data points
+        # Now using the posterior_alpha and posterior_beta, plot the density 
+        # of 10K data points
         posterior_distribution_sample <- rgamma(n = 10000, posterior_alpha, posterior_beta)
         
         plot(density(posterior_distribution_sample),
@@ -295,7 +309,7 @@ suppressWarnings({
         prior_beta <- 1
         
         # Now compute the posterior distribution parameters
-        posterior_alpha <- prior_alpha + length(sample)
+        posterior_alpha <- prior_alpha + n
         posterior_beta <- 1/(1/prior_beta + sum(sample))
         
         print(paste("The posterior gamma distribution parameters are:",
