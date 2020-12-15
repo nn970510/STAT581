@@ -1,7 +1,7 @@
 library(tidyr)
 
 # get all file names in tables folder
-filenames <- list.files("./581Project/facts/tables", pattern="*.tsv", full.names=TRUE)
+filenames <- list.files("./tables", pattern="*.tsv", full.names=TRUE)
 paste(filenames)
 
 # read each file in tables folder as a dataframe
@@ -28,3 +28,4 @@ all_facts = do.call(rbind, datalist)
 
 # export output
 write.table(all_facts, file = "all_facts.csv", row.names = FALSE, col.names = FALSE)
+

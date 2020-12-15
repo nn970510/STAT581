@@ -54,6 +54,6 @@ questionsPreprocessing <- function(split)
 	write.table(df_out_tidy, file = outputFile, row.names = FALSE, col.names = FALSE)
 }
 
-questionsPreprocessing("train")
+trainques=questionsPreprocessing("train")
 questionsPreprocessing("dev")
 questionsPreprocessing("test")
