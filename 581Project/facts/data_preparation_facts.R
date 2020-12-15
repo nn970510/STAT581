@@ -1,7 +1,7 @@
 library(tidyr)
 
 # get all file names in tables folder
-filenames <- list.files("tables", pattern="*.tsv", full.names=TRUE)
+filenames <- list.files("./581Project/facts/tables", pattern="*.tsv", full.names=TRUE)
 paste(filenames)
 
 # read each file in tables folder as a dataframe
