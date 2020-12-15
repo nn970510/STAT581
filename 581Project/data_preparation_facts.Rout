@@ -122,7 +122,7 @@ Type 'q()' to quit R.
 + 
 + 	# trim leading and trailing spaces
 + 	df_fact_tidy <- data.frame(lapply(df_fact, trimws), stringsAsFactors = FALSE)
-+ 	datalist[[i]] = df_fact_tidy
++ 	datalist[[i]] <- df_fact_tidy
 + }
 Warning message:
 In scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  :
@@ -130,8 +130,10 @@ In scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  :
 > 
 > # merge all dataframes into one
 > all_facts = do.call(rbind, datalist)
+> 
+> # export output
 > write.table(all_facts, file = "all_facts.csv", row.names = FALSE, col.names = FALSE)
 > 
 > proc.time()
    user  system elapsed 
-  1.072   0.044   1.111 
+  1.296   0.028   1.321 

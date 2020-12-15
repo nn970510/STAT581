@@ -20,9 +20,11 @@ for (i in 1:length(filenames)) {
 
 	# trim leading and trailing spaces
 	df_fact_tidy <- data.frame(lapply(df_fact, trimws), stringsAsFactors = FALSE)
-	datalist[[i]] = df_fact_tidy
+	datalist[[i]] <- df_fact_tidy
 }
 
 # merge all dataframes into one
 all_facts = do.call(rbind, datalist)
+
+# export output
 write.table(all_facts, file = "all_facts.csv", row.names = FALSE, col.names = FALSE)
