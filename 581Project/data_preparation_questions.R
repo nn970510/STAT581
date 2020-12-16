@@ -49,11 +49,15 @@ questionsPreprocessing <- function(split)
 	# trim leading and trailing spaces
 	df_out_tidy <- data.frame(lapply(df_out, trimws), stringsAsFactors = FALSE)
 
+	# add correct explanation column
+	df_out_tidy$explanation <- select(df, 'explanation')
+	print(df_out_tidy)
+
 	# export output
 	outputFile <- paste("questions", ".", split, ".csv", sep="")
 	write.table(df_out_tidy, file = outputFile, row.names = FALSE, col.names = FALSE)
 }
 
-trainques=questionsPreprocessing("train")
+questionsPreprocessing("train")
 questionsPreprocessing("dev")
 questionsPreprocessing("test")
