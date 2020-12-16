@@ -1,0 +1,144 @@
+
+R version 3.3.2 (2016-10-31) -- "Sincere Pumpkin Patch"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> 
+> library(tidyr)
+> 
+> # get all file names in tables folder
+> filenames <- list.files("tables", pattern="*.tsv", full.names=TRUE)
+> paste(filenames)
+ [1] "tables/ACTION.tsv"                      
+ [2] "tables/AFFECT.tsv"                      
+ [3] "tables/AFFORDANCES.tsv"                 
+ [4] "tables/ATTRIBUTE-VALUE-RANGE.tsv"       
+ [5] "tables/CAUSE.tsv"                       
+ [6] "tables/CHANGE-VEC.tsv"                  
+ [7] "tables/CHANGE.tsv"                      
+ [8] "tables/CHEM-PERIODIC-TAB-FAM.tsv"       
+ [9] "tables/CHEM-PERIODIC-TAB-LOC.tsv"       
+[10] "tables/COMPARISON.tsv"                  
+[11] "tables/CONSUMERS-EATING.tsv"            
+[12] "tables/CONTAINS.tsv"                    
+[13] "tables/CONVERSIONS.tsv"                 
+[14] "tables/COUPLEDRELATIONSHIP.tsv"         
+[15] "tables/DURATIONS.tsv"                   
+[16] "tables/DURING.tsv"                      
+[17] "tables/EXAMPLES.tsv"                    
+[18] "tables/FORMEDBY.tsv"                    
+[19] "tables/FREQUENCY.tsv"                   
+[20] "tables/HABITAT.tsv"                     
+[21] "tables/HISTORY.tsv"                     
+[22] "tables/IFTHEN.tsv"                      
+[23] "tables/INSTANCES.tsv"                   
+[24] "tables/KINDOF.tsv"                      
+[25] "tables/LIFESPAN.tsv"                    
+[26] "tables/LOCATIONS.tsv"                   
+[27] "tables/MADEOF.tsv"                      
+[28] "tables/MEASUREMENTS.tsv"                
+[29] "tables/NAMES.tsv"                       
+[30] "tables/OPPOSITES.tsv"                   
+[31] "tables/PARTOF.tsv"                      
+[32] "tables/PERCEPTIONS.tsv"                 
+[33] "tables/PREDATOR-PREY.tsv"               
+[34] "tables/PROCESSROLES.tsv"                
+[35] "tables/PROCESSSTAGES-ORDERS.tsv"        
+[36] "tables/PROCESSSTAGES.tsv"               
+[37] "tables/PROP-ANIMAL-ATTRIB.tsv"          
+[38] "tables/PROP-ANIMAL-MAT-IM.tsv"          
+[39] "tables/PROP-ANIMAL-REPROD.tsv"          
+[40] "tables/PROP-AVG-WEIGHT.tsv"             
+[41] "tables/PROP-CHEM-ACIDITY.tsv"           
+[42] "tables/PROP-CHEM-CHARGE.tsv"            
+[43] "tables/PROP-CHEM-ELEMSYMB.tsv"          
+[44] "tables/PROP-CHEM-REACT.tsv"             
+[45] "tables/PROP-CONDUCTIVITY.tsv"           
+[46] "tables/PROP-COUNTRY-HEMISPHERE.tsv"     
+[47] "tables/PROP-DOMRECESS-TRAIT.tsv"        
+[48] "tables/PROP-ENVIRONMENTATTRIB.tsv"      
+[49] "tables/PROP-FLEX-RIGIDITY.tsv"          
+[50] "tables/PROP-GENERIC.tsv"                
+[51] "tables/PROP-HARDNESS.tsv"               
+[52] "tables/PROP-INHERITEDLEARNED.tsv"       
+[53] "tables/PROP-INTENSIVE-EXTENSIVE.tsv"    
+[54] "tables/PROP-MAGNETISM.tsv"              
+[55] "tables/PROP-MAT-DURABILITY.tsv"         
+[56] "tables/PROP-MAT-OPACITY.tsv"            
+[57] "tables/PROP-MAT-PURITY-MIXTURE.tsv"     
+[58] "tables/PROP-ORBITAL-ROT.tsv"            
+[59] "tables/PROP-QUANTITY-DATE.tsv"          
+[60] "tables/PROP-RECYCLABLE.tsv"             
+[61] "tables/PROP-REL-DIST.tsv"               
+[62] "tables/PROP-RESOURCES-RENEWABLE.tsv"    
+[63] "tables/PROP-SOLUBILITY.tsv"             
+[64] "tables/PROP-SOLUTION.tsv"               
+[65] "tables/PROP-STATESOFMATTER-SHAPEVOL.tsv"
+[66] "tables/PROP-STATESOFMATTER-TEMPS.tsv"   
+[67] "tables/PROP-THINGS.tsv"                 
+[68] "tables/PROP-WARM-COLD-BLOODED.tsv"      
+[69] "tables/REQUIRES.tsv"                    
+[70] "tables/SEQ-SPATIAL.tsv"                 
+[71] "tables/SOURCEOF.tsv"                    
+[72] "tables/STAGE-IN-PROCESS.tsv"            
+[73] "tables/SUBDIVISION-COUNTRY.tsv"         
+[74] "tables/SUBDIVISION-GENERICSPATIAL.tsv"  
+[75] "tables/SYNONYMY.tsv"                    
+[76] "tables/TRANSFER.tsv"                    
+[77] "tables/UNIT.tsv"                        
+[78] "tables/USEDFOR.tsv"                     
+[79] "tables/VEHICLE.tsv"                     
+[80] "tables/WAVES.tsv"                       
+[81] "tables/XIVORE.tsv"                      
+> 
+> # read each file in tables folder as a dataframe
+> datalist = list()
+> for (i in 1:length(filenames)) {
++ 	df <- read.delim(filenames[i], header=FALSE, sep="\t")
++ 
++ 	# remove first row (header)
++ 	df_without_header <- df[-1,]
++ 
++ 	# remove last 3 columns except id
++ 	df_trimmed <- df_without_header[, -c(length(df_without_header)-3, length(df_without_header)-2)]
++ 	
++ 	# concat all columns except last as one
++ 	df_fact <- unite(df_trimmed[, -c(length(df_trimmed)-1)], 'fact', colnames(df_trimmed[, -c(length(df_trimmed)-1)]), sep = " ", remove = TRUE, na.rm = TRUE)
++ 
++ 	# trim leading and trailing spaces
++ 	df_fact_tidy <- data.frame(lapply(df_fact, trimws), stringsAsFactors = FALSE)
++ 
++ 	# add the id column
++ 	df_fact_tidy$id <- df_trimmed[, c(length(df_trimmed)-1)]
++ 
++ 	datalist[[i]] <- df_fact_tidy
++ }
+Warning message:
+In scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  :
+  EOF within quoted string
+> 
+> # merge all dataframes into one
+> all_facts = do.call(rbind, datalist)
+> 
+> # export output
+> write.table(all_facts, file = "all_facts.csv", row.names = FALSE, col.names = FALSE)
+> 
+> proc.time()
+   user  system elapsed 
+  1.800   0.016   1.806 
