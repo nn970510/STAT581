@@ -6,7 +6,6 @@ library(stringi)
 trainq<- readRDS(file = "questions.rds")
 all_facts<-read.csv("all_facts.csv",header=TRUE)
 names(trainq)<-c("ques","explain")
-a=trainq$explain
 
 prep_fun=function(x){
   x = str_to_lower(x)
